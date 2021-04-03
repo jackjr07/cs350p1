@@ -1,0 +1,29 @@
+Time efficiency/complexity - FAST
+Space efficiency/complexity - MEMORY
+
+//add 2 ints
+int x,y,z; //int is about 32 bit, unsigned
+
+
+z=x+y;
+    //This is actually involoves load, add, store
+    //load(k), add(k), store(k)
+    //These are all constants. 
+    //if 32 bits + 32 bits -> return the same type
+
+
+32 bits OS u - 4GB
+    You can't get tp use real 4 gb, because you can only contains to the max 32
+
+"GRADE SCHOOL METHOD"
+Carry, x, y
+
+S(n) = n + n+ n+1 + 1
+the time complexity, take k times to add the column. 
+T(n) = Kn, so it's linear
+
+HW:
+    Program the grade school multiplication
+    //2 hours
+    - Check time and space complexity
+
