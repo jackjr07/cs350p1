@@ -14,6 +14,8 @@
 #include<cctype>
 #include<vector>
 #include<cstring>
+#include<string>
+#include<algorithm>
 
 using namespace std;
 
@@ -68,6 +70,7 @@ char * holdMul(int j, int MAX, char * firstNum, int curr, char *& hold, int carr
 }
 
 
+
 char * startMul(int i ,int carry, char * firstNum, char * secondNum, int MAX, int MIN, char *& result){
     //if(i == MIN) return result; 
     if(i < 0) return result;
@@ -79,7 +82,6 @@ char * startMul(int i ,int carry, char * firstNum, char * secondNum, int MAX, in
     hold = holdMul(0, MAX, firstNum, curr, hold, 0);
     //cout << int(hold[i]) << endl;
     //cout << "Size: " << strlen(hold) << endl;
-    //STOP HERE//////////////////////////////////////////////////////////
     cout << strlen(hold) << endl;
     for(int k = 0; k < 4; ++k){
         cout << int (hold[k]) << endl;
@@ -87,13 +89,25 @@ char * startMul(int i ,int carry, char * firstNum, char * secondNum, int MAX, in
     --i;
     return startMul(i, carry, firstNum, secondNum, MAX, MIN, result);
 }
+/////////////////////
+//
+void printVector(vector<int> const &result, int i){
+    if(i == result.size()) return;
+    if(i == (result.size() -1)){
+        cout << result.at(i) << endl;
+        return;
+    }
+    cout << result.at(i);
+    ++i;
+    return printVector(result, i);
+};
 
 
 int main(){
     //Declare vals
     char firstNum[100];
     char secondNum[100];
-    int carry = 0;
+    //int carry = 0;
     
     //Get all inputs
     cout << "Welcome to Jack's program" << endl;
@@ -109,8 +123,36 @@ int main(){
     int MAX = getMax(maxLength(firstNum), maxLength(secondNum));
     int MIN = getMin(maxLength(firstNum), maxLength(secondNum));
 
-    char * result = startMul(MIN-1, 0, firstNum, secondNum, MAX, MIN, result);
-    cout << "IN MAIN " << int (result[0]) << endl;
-
+    //char * result = startMul(MIN-1, 0, firstNum, secondNum, MAX, MIN, result);
+    
+    ////////////////////////////STUCK WITH MY OWN METHOD///////////////////
+    //REDO WITH JUST SIMPLE FOR
+    //
+    int hold1 = 0;
+    int hold2 = 0;
+    int carry = 0;
+    int result[100];
+    vector <int> result1;
+    int k = 0;
+    for(int i = MIN-1; i > -1; --i){
+       hold1 =  int(secondNum[i]) - 48;
+        for(int j = MAX-1; j > -1; --j){
+            hold2 = int(firstNum[j]) - 48; 
+            //cout << hold1 << " * " << hold2 << endl;
+            int curr,carryH =0;
+            const int ans = hold2 * hold1;
+            curr = ans % 10;
+            carryH = ans - curr;
+            carryH = carry/10;
+            cout << hold2 << " * " << hold1 << " = " << hold2 * hold1 << endl;
+            cout << "Ans: " << curr << " Carry: " << carry << endl;
+            curr += carry;
+            result1.push_back(curr);
+            carry = carryH;
+        }
+    }
+    cout << "The answer is: ";
+    reverse(result1.begin(), result1.end());
+    printVector(result1, 0);
     return 0;
 }
